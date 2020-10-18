@@ -1,0 +1,7 @@
+name: HypTool
+main: fr.hypnos.hyptool.Main
+version: 0.0.1
+description: First release
+commands:
+  helirium:
+    description: Description du serveur.
