@@ -1,22 +1,15 @@
 package fr.hypnos.hyptool;
 
 
-import fr.hypnos.hyptool.commands.Commands;
+import fr.hypnos.hyptool.commands.CommandManager;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
-    public Main plugin;
-
-    public void setPlugin(Main plugin) {
-        this.plugin = plugin;
-    }
-
     @Override
     public void onEnable() {
-        saveDefaultConfig();
-        getCommand("ht").setExecutor(new Commands(this));
+        getCommand("ht").setExecutor(new CommandManager(this));
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "HypTool successfully loaded !");
     }
 
