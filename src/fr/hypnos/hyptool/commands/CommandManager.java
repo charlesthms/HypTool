@@ -1,7 +1,10 @@
 package fr.hypnos.hyptool.commands;
 
 import fr.hypnos.hyptool.Main;
+import fr.hypnos.hyptool.commands.subcommands.GetSite;
 import fr.hypnos.hyptool.commands.subcommands.Hello;
+import fr.hypnos.hyptool.commands.subcommands.Reload;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,24 +21,35 @@ public class CommandManager implements CommandExecutor, TabCompleter {
     // New arraylist of available commands
     private ArrayList<String> subArgs = new ArrayList<>();
 
-    private Main plugin;
+    private final Main plugin;
 
     public CommandManager(Main mainInstance) {
         this.plugin = mainInstance;
         subcommands.add(new Hello(plugin));
+        subcommands.add(new Reload(plugin));
+        subcommands.add(new GetSite(plugin));
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
             if (args.length > 0) {
                 for (SubCommand subcommand : subcommands) {
-                    if (args[0].equalsIgnoreCase(subcommand.getName())) { // Si une des méthode getName()
+                    if (args[0].equalsIgnoreCase(subcommand.getName())) { // Si une des méthode getName() existe
                         subcommand.runCommand(player, args);
                     }
                 }
+            } else {
+                player.sendMessage("---------- " + plugin.prefix + "----------");
+
+                // Display all the commands syntax + description
+                for (SubCommand subCommand : subcommands) {
+                    player.sendMessage(ChatColor.RED + subCommand.getSyntax() + " - " + subCommand.getDescription());
+                }
+                player.sendMessage("-----------------------------");
             }
         }
 
@@ -49,7 +63,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
             subArgs.add(subCommand.getName());
         }
 
-        if (args.length == 1){
+        if (args.length == 1) {
             // If argument exist then return the suggestions
             return subArgs;
         }

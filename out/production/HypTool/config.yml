@@ -1,4 +1,8 @@
-message:
-  mess1: "&4Bienvenue "
-  mess2: "&4Salut "
-  mess3: "&5Bonjour "
+hello:
+  mess1: "Bienvenue "
+  mess2: "Salut "
+  mess3: "Bonjour "
+
+messages:
+  - "N'oublie pas de visiter le site en utilisant /helirium site"
+  - "my message"
